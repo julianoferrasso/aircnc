@@ -12,20 +12,24 @@
 // req.params = Acessar route params (para edicao, delete)
 // req.body = Acessar corpo da requisisção (para criacao, edicao)
 
+const Booking = require('../models/Booking');
 
-const User = require('../models/User');
 
-module.exports = {
+module.exports = {   
+    //cria Reserva
     async store(req, res) {
-        const email = req.body.email;
-        // desestruturacao // const { email } = req.body; //
+        const { user_id } = req.headers;
+        const { spot_id } = req.params;
+        const { date } = req.body;
 
-        let user = await User.findOne({ email: email});
+        const booking = await Booking.create({
+            user: user_id,
+            spot: spot_id,
+            date,
+        });
 
-        if (!user){
-            user = await User.create({ email: email });
-        }
+        await booking.populate('spot').populate('user').execPopulate();
 
-        return res.json(user);
+        return res.json(booking);
     }
 };
