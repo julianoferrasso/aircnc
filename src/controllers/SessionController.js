@@ -2,9 +2,10 @@
 
 // index = lista listagem de sessoes
 // show = lista um aunica sessao
-// stroe = cria sessao
+// store = cria sessao
 // upadate = aletrar sessao
 // destroy = destroi a sessao
+
 const User = require('../models/User');
 
 module.exports = {
